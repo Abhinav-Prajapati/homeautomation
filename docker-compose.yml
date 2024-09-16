@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  ledfx:
+    image: shirom/ledfx 
+    container_name: ledfx
+    environment: 
+      - HOST=192.168.0.199
+      - FORMAT=-r 44100 -f S16_LE -c 2
+      - SQUEEZE=1
+    ports:
+      - 8888:8888
+    volumes:
+      - ~/ledfx-config:/app/ledfx-config
+      - ~/audio:/app/audio
+    devices:
+      - /dev/snd:/dev/snd  # Allows the container access to sound devices
+    group_add:
+      - audio              # Adds the container to the audio group
+    restart: always        # Automatically restarts the container
+
